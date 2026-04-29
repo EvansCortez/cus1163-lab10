@@ -77,43 +77,6 @@ find_world_writable() {
 
     local count=0
 
-    # TODO 1: Find all world-writable files and directories
-    #
-    # Instructions:
-    # 1. Use 'find' to search $TEST_DIR for items with world-write permission
-    #    Hint: find "$TEST_DIR" -perm -002
-    #
-    # 2. For each item found, you need to:
-    #    a. Determine if it's a file or directory using: [ -f "$item" ]
-    #    b. Get permissions using: stat -c "%a" "$item"
-    #    c. Print formatted output (see example below)
-    #    d. Increment the count variable
-    #
-    # 3. Use a while loop with process substitution to process results:
-    #    while IFS= read -r item; do
-    #        # your code here
-    #    done < <(find ...)
-    #
-    #    NOTE: Use "< <(find ...)" NOT "find ... |" to avoid subshell issues!
-    #
-    # Output format examples:
-    #   [FILE] /path/to/file.txt (666)
-    #   [DIR]  /path/to/directory (777)
-    #
-    # Example implementation structure:
-    # while IFS= read -r item; do
-    #     perms=$(stat -c "%a" "$item")
-    #
-    #     if [ -f "$item" ]; then
-    #         echo -e "${RED}[FILE]${NC} $item ($perms)"
-    #     elif [ -d "$item" ]; then
-    #         echo -e "${RED}[DIR] ${NC} $item ($perms)"
-    #     fi
-    #
-    #     ((count++))
-    # done < <(find "$TEST_DIR" -perm -002)
-
-    # YOUR CODE HERE
     while IFS= read -r item; do
         perms=$(stat -c "%a" "$item")
 
@@ -137,37 +100,6 @@ find_executable_non_scripts() {
 
     local count=0
 
-    # TODO 2: Find files that shouldn't be executable
-    #
-    # Instructions:
-    # 1. Use 'find' to locate .html, .css, .txt, and .conf files that are executable
-    #    Hint: find "$TEST_DIR" -type f \( -name "*.html" -o -name "*.css" -o -name "*.txt" -o -name "*.conf" \) -perm /111
-    #
-    #    Explanation:
-    #    -type f              = files only
-    #    \( ... \)            = group conditions
-    #    -name "*.html"       = HTML files
-    #    -o                   = OR operator
-    #    -perm /111           = any execute bit set
-    #
-    # 2. For each file found:
-    #    a. Get permissions using: stat -c "%a" "$file"
-    #    b. Print formatted output: [EXEC] /path/to/file (permissions)
-    #    c. Increment count
-    #
-    # 3. Use process substitution (NOT pipe) to preserve count:
-    #    while IFS= read -r file; do
-    #        # your code
-    #    done < <(find ...)
-    #
-    # Example implementation structure:
-    # while IFS= read -r file; do
-    #     perms=$(stat -c "%a" "$file")
-    #     echo -e "${YELLOW}[EXEC]${NC} $file ($perms)"
-    #     ((count++))
-    # done < <(find "$TEST_DIR" -type f \( -name "*.html" -o -name "*.css" -o -name "*.txt" -o -name "*.conf" \) -perm /111)
-
-    # YOUR CODE HERE
     while IFS= read -r file; do
         perms=$(stat -c "%a" "$file")
         echo -e "${YELLOW}[EXEC]${NC} $file ($perms)"
